@@ -1,0 +1,16 @@
+{
+  "name": "youtube_backend_project",
+  "version": "1.0.0",
+  "description": "Backend For Youtube Clone ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "backend",
+    "chai"
+  ],
+  "author": "Jai Vishav Bhaskar",
+  "license": "ISC"
+}
