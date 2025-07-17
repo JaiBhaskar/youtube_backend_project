@@ -11,9 +11,22 @@ dotenv.config({
 
 
 // Second Approach
-connectDB();
+connectDB()
 
+//niche wali lines because connecting_db mein hamare paas ek async-await hai and it alwas returns a promise
+.then(()=> {
+    app.on("error",(error)=>{
+        console.log("The error we have encountered is: ",error);
+        throw error;
+    })
 
+    app.listen(process.env.PORT || 3000, ()=>{
+        console.log(`Server is running at port: ${process.env.PORT}`);
+    })
+})
+.catch((err)=>{
+    console.log("MongoDB connection failed !!! ",err);
+})
 
 
 
