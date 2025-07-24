@@ -3,8 +3,8 @@
 
 // 2nd way: promise wala async handler
 const asyncHandler = (requestHandler)=> {
-    (req,res,next)=>{
-        Promise.resolve(requestHandler(req,res,next)).reject((err)=>next(err))
+    return (req,res,next)=>{
+        Promise.resolve(requestHandler(req,res,next)).catch((err)=>next(err))
     }
 }
 export {asyncHandler}

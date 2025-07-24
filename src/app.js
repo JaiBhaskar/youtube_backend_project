@@ -15,4 +15,14 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+
+//routes import
+
+import userRouter from './routes/user.routes.js'
+
+
+//routes declaration 
+app.use("/api/v1/users",userRouter)
+
+// ek baar users pe direct kardiya uske aage routes waali file mein aage direct ho jaayega jesa:-> http://localhost:8000/api/v1/users/register
 export { app };
