@@ -22,7 +22,7 @@ const registerUser = asyncHandler(async(req,res) =>{
     // return response if nahi huaa hai toh error bhejdo
 
     const {fullName, email, username, password} = req.body
-    console.log("email: ", email);
+    // console.log("email: ", email);
     
     // Yaa toh esa simple if-else use karle yaa fir niche wala advance if else using some method use karle
     // if(fullName === ""){
@@ -36,23 +36,28 @@ const registerUser = asyncHandler(async(req,res) =>{
         throw new ApiError(400, "All fields are required")
     }
 
-    const existeduser=User.findOne({
+    const existedUser= await User.findOne({
         $or: [{username}, {email}]
     })
 
     if(existedUser){
         throw new ApiError(409, "User with email or username already exists")
     }
+    // console.log(req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length>0){
+        coverImageLocalPath = req.files.coverImage[0].path
+    }
     if(!avatarLocalPath){
         throw new ApiError(400, "Avatar file is required")
     }
 
     const avatar=await uploadOnCloudinary(avatarLocalPath)
-    const coverImage=uploadOnCloudinary(coverImageLocalPath)
+    const coverImage=await uploadOnCloudinary(coverImageLocalPath)
 
     if(!avatar){
         throw new ApiError(400,"Avatar file is required")
